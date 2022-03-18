@@ -2,7 +2,7 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -16,7 +16,8 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
-    'apps.api'
+    'apps.api',
+    'apps.user',
 ]
 
 THIRD_APPS = [
@@ -127,6 +128,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'user.User'
 
 STATIC_URL = 'static/'
 
