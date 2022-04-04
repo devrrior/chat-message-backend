@@ -35,7 +35,6 @@ class TokenAuthMiddleware:
             ]
             UntypedToken(access_token)
         except Exception as e:
-            # scope['error'] = 'Invalid token'
             return None
         else:
             #  Then token is valid, decode it

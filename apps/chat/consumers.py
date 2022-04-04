@@ -5,6 +5,8 @@ from channels.generic.websocket import WebsocketConsumer
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
+
+        # print(self.scope['user'])
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
 
@@ -13,7 +15,10 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name, self.channel_name
         )
 
+        # self.send()
+
         self.accept()
+        # self.send(text_data=json.dumps({'message': self.scope['error']}))
 
     def disconnect(self, close_code):
         # Leave room group
