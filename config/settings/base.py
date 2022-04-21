@@ -18,6 +18,7 @@ BASE_APPS = [
 LOCAL_APPS = [
     'apps.api',
     'apps.user',
+    'apps.chat',
 ]
 
 THIRD_APPS = [
