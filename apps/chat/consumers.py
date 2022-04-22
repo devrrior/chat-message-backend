@@ -6,7 +6,7 @@ from .models import Message
 
 
 class ChatConsumer(WebsocketConsumer):
-    def fetch_messages(self, data):
+    def fetch_messages(self):
         messages = Message.last_10_messages()
         content = {'command': 'messages', 'messages': self.messages_to_json(messages)}
         self.send_message(content)
@@ -47,7 +47,7 @@ class ChatConsumer(WebsocketConsumer):
 
         self.accept()
 
-    def disconnect(self, close_code):
+    def disconnect(self):
         # Leave room group
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name, self.channel_name
