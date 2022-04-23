@@ -6,8 +6,11 @@ from .models import Message
 
 
 class MessageTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create(email='devrrior@gmail.com', first_name='Fernando', last_name='Guerrero', password='password')
+
     def test_message_creation(self):
-        user1 = User.objects.create(email='devrrior@gmail.com', first_name='Fernando', last_name='Guerrero', password='password')
-        message1 = Message.objects.create(author=user1, content='Hi mate!')
+        message1 = Message.objects.create(author=self.user, content='Hi mate!')
         self.assertEqual('Hi mate!', message1.content)
-        self.assertEqual(user1, message1.author)
+        self.assertEqual(self.user, message1.author)
