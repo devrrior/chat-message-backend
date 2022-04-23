@@ -1,10 +1,11 @@
-from rest_framework_simplejwt.tokens import UntypedToken
-from django.db import close_old_connections
 from urllib.parse import parse_qs
+
+from channels.db import database_sync_to_async
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.db import close_old_connections
 from jwt import decode as jwt_decode
-from channels.db import database_sync_to_async
+from rest_framework_simplejwt.tokens import UntypedToken
 
 
 @database_sync_to_async

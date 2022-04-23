@@ -2,6 +2,7 @@ from django.db import models
 
 from apps.user.models import User
 
+
 class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages')
     content = models.TextField()
