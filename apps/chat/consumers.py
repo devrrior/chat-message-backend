@@ -3,12 +3,12 @@ import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
-from .models import Message
+from .models import Chat, Message
 
 
 class ChatConsumer(WebsocketConsumer):
-    def fetch_messages(self):
-        messages = Message.last_10_messages()
+    def fetch_messages(self, data):
+        messages = Chat.last_10_messages()
         content = {'command': 'messages', 'messages': self.messages_to_json(messages)}
         self.send_message(content)
 
