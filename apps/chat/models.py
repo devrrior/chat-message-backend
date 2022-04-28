@@ -22,6 +22,9 @@ class Chat(models.Model):
     def last_10_messages(self):
         return self.messages.objects.order_by('-created_at').all()[:10]
 
+    def last_message(self):
+        return self.messages.order_by('-created_at').first()
+
 
 class Message(models.Model):
     contact = models.ForeignKey(
