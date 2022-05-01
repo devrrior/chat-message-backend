@@ -47,14 +47,16 @@ class ChatConsumer(WebsocketConsumer):
 
         recipent = self.get_recipent(chat, contact.user)
 
+        # this is for notification new message
         self.room_group_name_foreign = 'notification_%s' % recipent.id
-        print('room_group_name_foreign', self.room_group_name_foreign)
 
+        # this is for sending message to recipent
         message = Message.objects.create(
             contact=contact, content=data['message'], chat=chat
         )
         content = {'command': 'new_message', 'message': self.message_to_json(message)}
 
+        # this is for notification new message
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name, self.channel_name
         )
@@ -65,6 +67,7 @@ class ChatConsumer(WebsocketConsumer):
         }
         content_for_notification['message']['chat_id'] = self.room_name
         self.send_notification(content_for_notification)
+        self.send_chat_notification(content_for_notification)
 
         return self.send_chat_message(content)
 
@@ -89,12 +92,15 @@ class ChatConsumer(WebsocketConsumer):
     def send_message(self, message):
         self.send(text_data=json.dumps(message))
 
+    def send_notification(self, message):
+        self.send(text_data=json.dumps(message))
+
     def send_chat_message(self, message):
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name, {'type': 'chat.message', 'message': message}
         )
 
-    def send_notification(self, message):
+    def send_chat_notification(self, message):
         # try:
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name_foreign,
