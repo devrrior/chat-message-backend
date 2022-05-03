@@ -20,7 +20,7 @@ class Chat(models.Model):
         return f'Chat between {self.participants.all()}'
 
     def last_10_messages(self):
-        return self.messages.order_by('-created_at').all()[:10]
+        return self.messages.order_by('-created_at').all()[:30]
 
     def last_message(self):
         return self.messages.order_by('-created_at').first()
